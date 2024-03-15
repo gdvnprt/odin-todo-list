@@ -6,9 +6,6 @@ export default function newToDo(ttle, desc, due, prio) {
     let dueDate = due;
     let priority = prio;
     let done = false;
-    const complete = function() {
-        done = true;
-    };
 
-    return { title, description, dueDate, priority, done, complete };
+    return { title, description, dueDate, priority, done };
 };

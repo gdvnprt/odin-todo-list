@@ -1,4 +1,4 @@
-import newToDo from './newToDo.js';
+import newToDo from './todo.js';
 
 export default function newProject(ttle, desc, due) {
     const title = ttle;

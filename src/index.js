@@ -9,11 +9,20 @@ const toDoDisplay = document.querySelector('#todo');
 //populating functions
 function populateProjects() {
     // loop for all projects
-    // create a project div within projectDisplay
-    // make the div able to be highlighted on click
-    // make the same event trigger populating ToDo with a separate function
-    // when another project is clicked, all others remove highlight
-    // show project title and due date if incomplete and complete if complete
+    for (let i = 0; i < projectList.length; i++) {
+        // create a project div within projectDisplay
+        let projDiv = document.createElement('div');
+        projDiv.classList.add('project-div');
+        // make the div able to be highlighted on click
+        projDiv.addEventListener('click', () => {
+            projDiv.style.backgroundColor = 'blue';
+            populateToDo();
+        });
+        // make the same event trigger populating ToDo with a separate function
+        // when another project is clicked, all others remove highlight
+        // show project title and due date if incomplete and complete if complete
+    };
+    
 };
 
 function populateToDo() {
@@ -58,6 +67,7 @@ projForm.addEventListener('submit', (e) => {
     const fd = new FormData(projForm);
     const formObj = Object.fromEntries(fd);
     projectList.unshift(newProject(formObj.title, '', '', ''));
+    localStorage.setItem(projectList);
     clearProjects();
     // add populate projects
     // highlight the new project as if selected

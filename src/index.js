@@ -36,6 +36,9 @@ function populateProjects() {
             projDueDate.classList.add('proj-complete');
             projDueDate.innerHTML = 'COMPLETE';
         };
+        projectDisplay.appendChild(projDiv);
+        projDiv.appendChild(projTtl);
+        projDiv.appendChild(projDueDate)
     };
     
 };

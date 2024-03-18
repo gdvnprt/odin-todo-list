@@ -15,17 +15,32 @@ function populateProjects() {
         projDiv.classList.add('project-div');
         // make the div able to be highlighted on click
         projDiv.addEventListener('click', () => {
+            // when another project is clicked, all others remove highlight
+            let allProjs = document.querySelectorAll('.project-div');
+            for (let a = 0; a < allProjs.length; a++) {
+                allProjs[i].style.backgroundColor = 'white';
+            };
             projDiv.style.backgroundColor = 'blue';
-            populateToDo();
+            // make the same event trigger populating ToDo with a separate function
+            populateToDo(projectList[i]);
         });
-        // make the same event trigger populating ToDo with a separate function
-        // when another project is clicked, all others remove highlight
         // show project title and due date if incomplete and complete if complete
+        const projTtl = document.createElement('p');
+        projTtl.classList.add('project-title');
+        projTtl.innerHTML = projectList[i].title;
+        const projDueDate = document.createElement('p');
+        if (projectList[i].done = false) {
+            projDueDate.classList.add('proj-incomplete');
+            projDueDate.innerHTML = projectList[i].dueDate;
+        } else {
+            projDueDate.classList.add('proj-complete');
+            projDueDate.innerHTML = 'COMPLETE';
+        };
     };
     
 };
 
-function populateToDo() {
+function populateToDo(object) {
     // populate project info section with title, desc, due date
     // have methods to change all project info
     // project info has a button to mark the project complete or incomplete

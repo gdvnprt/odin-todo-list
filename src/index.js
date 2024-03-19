@@ -7,6 +7,80 @@ const projInfo = document.querySelector('#proj-info');
 const toDoDisplay = document.querySelector('#todo');
 
 //populating functions
+function populateToDo(object) {
+    // populate project info section with title, desc, due date
+    const projTitle = document.createElement('h2');
+    projTitle.innerHTML = object.title;
+    projInfo.appendChild(projTitle);
+
+    const projDesc = document.createElement('p');
+    projDesc.classList.add('project-description');
+    projDesc.innerHTML = object.description;
+    projInfo.appendChild(projDesc);
+
+    const projDue = document.createElement('p');
+    projDue.id = 'due-date';
+    projDue.innerHTML = object.dueDate;
+    projInfo.appendChild(projDue);
+    // have methods to change all project info
+    // project info has a button to mark the project complete or incomplete
+    const completeProj = document.createElement('button');
+    if (object.done = false) {
+        completeProj.id = 'complete-project';
+        completeProj.innerHTML = 'Mark Project Complete'
+        completeProj.addEventListener('click', () => {
+            object.done = true;
+            populateToDo(object);
+        });
+    } else {
+        completeProj.id = 'undo-complete-project';
+        completeProj.innerHTML = 'Mark Project Incomplete'
+        completeProj.addEventListener('click', () => {
+            object.done = false;
+            populateToDo(object);
+        });
+    };
+    // loop the below for all toDo items
+    for (let i = 0; i < object.list.length; i++) {
+        // create a div within toDoDisplay
+        const toDoItem = document.createElement('div');
+        toDoItem.classList.add('to-do-item');
+        toDoDisplay.appendChild(toDoItem); 
+        // div has a prominent checkbox to change complete status
+        toDoCheckbox = document.createElement('input');
+        toDoCheckbox.type = 'checkbox';
+        toDoCheckbox.classList.add('to-do-checkbox');
+        toDoCheckbox.addEventListener('select', () => {
+            toDoCheckbox.style.backgroundColor = 'green';
+        });
+        toDoCheckbox.addEventListener('unselect', () => {
+            toDoCheckbox.style.backgroundColor = 'white';
+        });
+        toDoItem.appendChild(toDoCheckbox);
+        // populate the div with title, description, priority, due date
+        const toDoTitle = document.createElement('p');
+        toDoTitle.classList.add('to-do-title');
+        toDoItem.appendChild(toDoTitle);
+
+        const toDoDesc = document.createElement('p');
+        toDoDesc.classList.add('to-do-desc');
+        toDoItem.appendChild(toDoDesc);
+
+        const toDoPrio = document.createElement('p');
+        toDoPrio.classList.add('to-do-prio');
+        toDoItem.appendChild(toDoPrio);
+
+        const toDoDate = document.createElement('p');
+        toDoDate.classList.add('to-do-date');
+        toDoItem.appendChild(toDoDate);
+        // priority should adjust position in list
+        // items should be able to be edited
+    };
+    // have a button to create a new to-do item
+    
+};
+
+
 function populateProjects() {
     // loop for all projects
     for (let i = 0; i < projectList.length; i++) {
@@ -18,7 +92,7 @@ function populateProjects() {
             // when another project is clicked, all others remove highlight
             let allProjs = document.querySelectorAll('.project-div');
             for (let a = 0; a < allProjs.length; a++) {
-                allProjs[i].style.backgroundColor = 'white';
+                allProjs[a].style.backgroundColor = 'white';
             };
             projDiv.style.backgroundColor = 'blue';
             // make the same event trigger populating ToDo with a separate function
@@ -43,16 +117,6 @@ function populateProjects() {
     
 };
 
-function populateToDo(object) {
-    // populate project info section with title, desc, due date
-    // have methods to change all project info
-    // project info has a button to mark the project complete or incomplete
-    // loop the below for all toDo items
-    // create a div within toDoDisplay
-    // populate the div with title, description, priority, due date
-    // div has a prominent checkbox to change complete status
-};
-
 //clearing functions
 function clearProjects() {
     while (projectDisplay.firstChild) {
@@ -68,6 +132,8 @@ function clearToDo() {
 
 // on load, pull projects from local storage
 let projectList = accessStorage();
+populateProjects();
+populateToDo(projectList[0]);
 
 // new project button populates DOM and local storage list
 const newProjBtn = document.querySelector('#new-project');
@@ -87,10 +153,11 @@ projForm.addEventListener('submit', (e) => {
     projectList.unshift(newProject(formObj.title, '', '', ''));
     localStorage.setItem(projectList);
     clearProjects();
-    // add populate projects
+    populateProjects();
     // highlight the new project as if selected
     clearToDo();
-    // add populate toDo
+    const listPlace = projectList.length - 1;
+    populateToDo(projectList[listPlace]);
     newProjDia.open = false;
     projForm.reset();
 });

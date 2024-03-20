@@ -77,7 +77,45 @@ function populateToDo(object) {
         // items should be able to be edited
     };
     // have a button to create a new to-do item
+
+    const toDoDia = document.createElement('dialog');
+    toDoDia.id = 'new-todo-dia';
+    toDoDia.open = false;
+    toDoDisplay.appendChild(toDoDia);
+
+    const toDoForm = document.createElement('form');
+    toDoForm.id = 'new-todo-form';
+    toDoDia.appendChild(toDoForm);
+
+    const inputTitle = document.createElement('input');
+    inputTitle.type = 'text';
+    inputTitle.name = 'title';
+    inputTitle.id = 'todo-title';
+    inputTitle.placeholder = 'To-Do';
+    toDoForm.appendChild(inputTitle);
+
+    const inputDesc = document.createElement('input');
+    inputDesc.type = 'text';
+    inputDesc.name = 'desc';
+    inputDesc.id = 'todo-desc';
+    inputDesc.placeholder = 'Details';
+    toDoForm.appendChild(inputDesc);
+
+    const inputDate = document.createElement('input');
+    inputDate.type = 'date';
+    inputDate.name = 'due-date';
+    inputDate.id = 'todo-due';
+    toDoForm.appendChild(inputDate);
+
+    const selectPrio = document.createElement('select');
+
     
+    const newToDoBtn = document.createElement('button');
+    newToDoBtn.id = 'new-todo-btn';
+    newToDoBtn.addEventListener('click', () => {
+        toDoDia.open = true;
+    });
+    toDoDisplay.appendChild(newToDoBtn);
 };
 
 
@@ -133,7 +171,6 @@ function clearToDo() {
 // on load, pull projects from local storage
 let projectList = accessStorage();
 populateProjects();
-populateToDo(projectList[0]);
 
 // new project button populates DOM and local storage list
 const newProjBtn = document.querySelector('#new-project');

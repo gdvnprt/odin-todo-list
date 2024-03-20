@@ -1,8 +1,8 @@
 //create to do item
 
 export default function newToDo(ttle, desc, due, prio) {
-    const title = ttle;
-    const description = desc;
+    let title = ttle;
+    let description = desc;
     let dueDate = due;
     let priority = prio;
     let done = false;

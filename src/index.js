@@ -108,8 +108,44 @@ function populateToDo(object) {
     toDoForm.appendChild(inputDate);
 
     const selectPrio = document.createElement('select');
+    selectPrio.id = 'todo-prio';
+    selectPrio.name = 'priority';
+    toDoForm.appendChild(selectPrio);
 
-    
+    const highPrio = document.createElement('option');
+    highPrio.value = 'high';
+    highPrio.innerHTML = 'High';
+    selectPrio.appendChild(highPrio);
+
+    const medPrio = document.createElement('option');
+    medPrio.value = 'medium';
+    medPrio.innerHTML = 'Medium';
+    selectPrio.appendChild(medPrio);
+
+    const lowPrio = document.createElement('option');
+    lowPrio.value = 'low';
+    lowPrio.innerHTML = 'Low';
+    selectPrio.appendChild(lowPrio);
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.id = 'todo-submit';
+    submitButton.innerHTML = 'Create';
+    toDoForm.appendChild(submitButton)
+
+    toDoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(projForm);
+        const formObj = Object.fromEntries(fd);
+        object.list.push(newToDo(formObj.title, formObj.description, formObj.dueDate, formObj.priority));
+        localStorage.setItem(projectList);
+        clearToDo();
+        populateToDo(object);
+        toDoDia.open = false;
+        toDoForm.reset();
+    });
+
+
     const newToDoBtn = document.createElement('button');
     newToDoBtn.id = 'new-todo-btn';
     newToDoBtn.addEventListener('click', () => {

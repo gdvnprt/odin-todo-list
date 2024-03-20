@@ -1,3 +1,4 @@
+import './style.css'
 import newToDo from './todo.js';
 import newProject from './project.js';
 import accessStorage from './storage.js';

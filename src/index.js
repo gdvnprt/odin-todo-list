@@ -139,7 +139,7 @@ function populateToDo(object) {
         const fd = new FormData(projForm);
         const formObj = Object.fromEntries(fd);
         object.list.push(newToDo(formObj.title, formObj.description, formObj.dueDate, formObj.priority));
-        localStorage.setItem(projectList);
+        localStorage.projectList = projectList;
         clearToDo();
         populateToDo(object);
         toDoDia.open = false;
@@ -207,7 +207,10 @@ function clearToDo() {
 
 // on load, pull projects from local storage
 let projectList = accessStorage();
-populateProjects();
+
+if (projectList.length > 0) {
+    populateProjects();
+};
 
 // new project button populates DOM and local storage list
 const newProjBtn = document.querySelector('#new-project');
@@ -225,7 +228,7 @@ projForm.addEventListener('submit', (e) => {
     const fd = new FormData(projForm);
     const formObj = Object.fromEntries(fd);
     projectList.unshift(newProject(formObj.title, '', '', ''));
-    localStorage.setItem(projectList);
+    localStorage.projectList = projectList;
     clearProjects();
     populateProjects();
     // highlight the new project as if selected

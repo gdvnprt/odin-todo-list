@@ -33,8 +33,8 @@ function storageAvailable(type) {
 
   export default function accessStorage() {
     if (storageAvailable("localStorage")) {
-        if (!localStorage.getItem("projectList")) {
-            return localStorage.getItem("projectList");
+        if (localStorage.projectList) {
+            return localStorage.projectList;
         } else {
             return [];
         }

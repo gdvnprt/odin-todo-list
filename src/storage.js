@@ -32,9 +32,5 @@ function storageAvailable(type) {
   // be able to update project properties within the project list
 
   export default function accessStorage() {
-    if (localStorage.toDoProjects) {
-        return JSON.parse(localStorage.getItem('toDoProjects'));
-    } else {
-        return [];
-    };
+    return JSON.parse(localStorage.getItem('toDoProjects') || '[]');
   };

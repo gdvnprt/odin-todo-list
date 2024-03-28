@@ -48,7 +48,7 @@ function populateToDo(object) {
         toDoItem.classList.add('to-do-item');
         toDoDisplay.appendChild(toDoItem); 
         // div has a prominent checkbox to change complete status
-        toDoCheckbox = document.createElement('input');
+        const toDoCheckbox = document.createElement('input');
         toDoCheckbox.type = 'checkbox';
         toDoCheckbox.classList.add('to-do-checkbox');
         toDoCheckbox.addEventListener('select', () => {
@@ -61,18 +61,22 @@ function populateToDo(object) {
         // populate the div with title, description, priority, due date
         const toDoTitle = document.createElement('p');
         toDoTitle.classList.add('to-do-title');
+        toDoTitle.innerHTML = object.list[i].title;
         toDoItem.appendChild(toDoTitle);
 
         const toDoDesc = document.createElement('p');
         toDoDesc.classList.add('to-do-desc');
+        toDoDesc.innerHTML = object.list[i].description;
         toDoItem.appendChild(toDoDesc);
 
         const toDoPrio = document.createElement('p');
         toDoPrio.classList.add('to-do-prio');
+        toDoPrio.innerHTML = object.list[i].priority;
         toDoItem.appendChild(toDoPrio);
 
         const toDoDate = document.createElement('p');
         toDoDate.classList.add('to-do-date');
+        toDoDate.innerHTML = object.list[i].dueDate;
         toDoItem.appendChild(toDoDate);
         // priority should adjust position in list
         // items should be able to be edited
@@ -104,7 +108,7 @@ function populateToDo(object) {
 
     const inputDate = document.createElement('input');
     inputDate.type = 'date';
-    inputDate.name = 'due-date';
+    inputDate.name = 'dueDate';
     inputDate.id = 'todo-due';
     toDoForm.appendChild(inputDate);
 
@@ -138,7 +142,7 @@ function populateToDo(object) {
         e.preventDefault();
         const fd = new FormData(projForm);
         const formObj = Object.fromEntries(fd);
-        object.list.push(newToDo(formObj.title, formObj.description, formObj.dueDate, formObj.priority));
+        object.list.push(newToDo(formObj.title, formObj.desc, formObj.dueDate, formObj.priority));
         localStorage.setItem('toDoProjects', JSON.stringify(projectList));
         clearToDo();
         populateToDo(object);

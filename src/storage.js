@@ -1,3 +1,7 @@
+export default function accessStorage() {
+  return JSON.parse(localStorage.getItem('toDoProjects') || '[]');
+};
+
 function storageAvailable(type) {
     let storage;
     try {
@@ -30,7 +34,3 @@ function storageAvailable(type) {
   // if no project list in local storage, make one
   // be able to push new projects to project list array in storage
   // be able to update project properties within the project list
-
-  export default function accessStorage() {
-    return JSON.parse(localStorage.getItem('toDoProjects') || '[]');
-  };

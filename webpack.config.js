@@ -5,6 +5,9 @@ module.exports = {
   mode: 'development',
   entry: {
   index: './src/index.js',
+  storage: './src/storage.js',
+  project: './src/project.js',
+  todo: './src/todo.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -15,7 +18,7 @@ module.exports = {
   ],
   devtool: 'inline-source-map',
   output: {
-    filename: 'main.js',
+    filename: '[name].main.js',
     path: path.resolve(__dirname, './dist'),
     clean: true,
   },

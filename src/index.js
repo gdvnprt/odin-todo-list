@@ -139,7 +139,7 @@ function populateToDo(object) {
         const fd = new FormData(projForm);
         const formObj = Object.fromEntries(fd);
         object.list.push(newToDo(formObj.title, formObj.description, formObj.dueDate, formObj.priority));
-        localStorage.projectList = projectList;
+        localStorage.setItem('toDoProjects', JSON.stringify(projectList));
         clearToDo();
         populateToDo(object);
         toDoDia.open = false;
@@ -149,6 +149,7 @@ function populateToDo(object) {
 
     const newToDoBtn = document.createElement('button');
     newToDoBtn.id = 'new-todo-btn';
+    newToDoBtn.innerHTML = 'New Item'
     newToDoBtn.addEventListener('click', () => {
         toDoDia.open = true;
     });
@@ -201,7 +202,7 @@ function clearProjects() {
 
 function clearToDo() {
     while (toDoDisplay.firstChild) {
-        toDoDisplay.removeChild(projectDisplay.firstChild);
+        toDoDisplay.removeChild(toDoDisplay.firstChild);
     };
 };
 
@@ -228,7 +229,7 @@ projForm.addEventListener('submit', (e) => {
     const fd = new FormData(projForm);
     const formObj = Object.fromEntries(fd);
     projectList.unshift(newProject(formObj.title, '', '', ''));
-    localStorage.projectList = projectList;
+    localStorage.setItem('toDoProjects', JSON.stringify(projectList));
     clearProjects();
     populateProjects();
     // highlight the new project as if selected

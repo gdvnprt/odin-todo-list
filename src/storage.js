@@ -32,13 +32,9 @@ function storageAvailable(type) {
   // be able to update project properties within the project list
 
   export default function accessStorage() {
-    if (storageAvailable("localStorage")) {
-        if (localStorage.projectList) {
-            return localStorage.projectList;
-        } else {
-            return [];
-        }
+    if (localStorage.toDoProjects) {
+        return JSON.parse(localStorage.getItem('toDoProjects'));
     } else {
-        alert("Cannot access local storage.  Please update your browser or use a different one.")
+        return [];
     };
   };

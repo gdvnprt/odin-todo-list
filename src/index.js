@@ -51,13 +51,22 @@ function populateToDo(object) {
         const toDoCheckbox = document.createElement('input');
         toDoCheckbox.type = 'checkbox';
         toDoCheckbox.classList.add('to-do-checkbox');
-        toDoCheckbox.addEventListener('select', () => {
-            toDoCheckbox.style.backgroundColor = 'green';
-        });
-        toDoCheckbox.addEventListener('unselect', () => {
-            toDoCheckbox.style.backgroundColor = 'white';
+        if (object.list[i].done === true) {
+            toDoCheckbox.checked = true;
+            toDoItem.style.backgroundColor = 'green';
+        };
+        toDoCheckbox.addEventListener('change', (event) => {
+            if (event.currentTarget.checked) {
+                toDoItem.style.backgroundColor = 'green';
+                object.list[i].done = true;
+            } else {
+                toDoItem.style.backgroundColor = 'white';
+                object.list[i].done = false;
+            };
+            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
         });
         toDoItem.appendChild(toDoCheckbox);
+
         // populate the div with title, description, priority, due date
         const toDoTitle = document.createElement('p');
         toDoTitle.classList.add('to-do-title');
@@ -79,7 +88,7 @@ function populateToDo(object) {
         toDoDate.innerHTML = object.list[i].dueDate;
         toDoItem.appendChild(toDoDate);
         // priority should adjust position in list
-        // items should be able to be edited
+        // items should be able to be deleted
     };
     // have a button to create a new to-do item
 
@@ -184,7 +193,7 @@ function populateProjects() {
         projTtl.classList.add('project-title');
         projTtl.innerHTML = projectList[i].title;
         const projDueDate = document.createElement('p');
-        if (projectList[i].done = false) {
+        if (projectList[i].done === false) {
             projDueDate.classList.add('proj-incomplete');
             projDueDate.innerHTML = projectList[i].dueDate;
         } else {

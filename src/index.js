@@ -140,7 +140,7 @@ function populateToDo(object) {
 
     toDoForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const fd = new FormData(projForm);
+        const fd = new FormData(toDoForm);
         const formObj = Object.fromEntries(fd);
         object.list.push(newToDo(formObj.title, formObj.desc, formObj.dueDate, formObj.priority));
         localStorage.setItem('toDoProjects', JSON.stringify(projectList));
@@ -176,6 +176,7 @@ function populateProjects() {
             };
             projDiv.style.backgroundColor = 'blue';
             // make the same event trigger populating ToDo with a separate function
+            clearToDo();
             populateToDo(projectList[i]);
         });
         // show project title and due date if incomplete and complete if complete
@@ -207,6 +208,9 @@ function clearProjects() {
 function clearToDo() {
     while (toDoDisplay.firstChild) {
         toDoDisplay.removeChild(toDoDisplay.firstChild);
+    };
+    while (projInfo.firstChild) {
+        projInfo.removeChild(projInfo.firstChild);
     };
 };
 

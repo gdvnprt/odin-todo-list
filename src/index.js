@@ -89,6 +89,8 @@ function populateToDo(object) {
         object.dueDate = formObj.dueDate;
         object.priority = formObj.priority;
         localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+        clearProjects();
+        populateProjects();
         clearToDo();
         populateToDo(object);
         projChangeDia.open = false;
@@ -106,7 +108,7 @@ function populateToDo(object) {
 
     // project info has a button to mark the project complete or incomplete
     const completeProj = document.createElement('button');
-    if (object.done = false) {
+    if (object.done === false) {
         completeProj.id = 'complete-project';
         completeProj.innerHTML = 'Mark Project Complete'
         completeProj.addEventListener('click', () => {
@@ -285,7 +287,7 @@ function populateProjects() {
         const projDueDate = document.createElement('p');
         if (projectList[i].done === false) {
             projDueDate.classList.add('proj-incomplete');
-            projDueDate.innerHTML = 'Due' + projectList[i].dueDate;
+            projDueDate.innerHTML = 'Due: ' + projectList[i].dueDate;
         } else {
             projDueDate.classList.add('proj-complete');
             projDueDate.innerHTML = 'COMPLETE';

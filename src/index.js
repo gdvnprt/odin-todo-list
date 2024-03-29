@@ -23,7 +23,87 @@ function populateToDo(object) {
     projDue.id = 'due-date';
     projDue.innerHTML = object.dueDate;
     projInfo.appendChild(projDue);
+
     // have methods to change all project info
+    const projChangeDia = document.createElement('dialog');
+    projChangeDia.id = 'change-proj-dia';
+    projChangeDia.open = false;
+    projInfo.appendChild(projChangeDia);
+
+    const projChangeForm = document.createElement('form');
+    projChangeForm.id = 'change-proj-form';
+    projChangeDia.appendChild(projChangeForm);
+
+    const changeTitle = document.createElement('input');
+    changeTitle.type = 'text';
+    changeTitle.name = 'title';
+    changeTitle.id = 'change-title';
+    changeTitle.placeholder = object.title;
+    projChangeForm.appendChild(changeTitle);
+
+    const changeDesc = document.createElement('input');
+    changeDesc.type = 'text';
+    changeDesc.name = 'desc';
+    changeDesc.id = 'change-desc';
+    changeDesc.placeholder = object.desc || "Description";
+    projChangeForm.appendChild(changeDesc);
+
+    const changeDate = document.createElement('input');
+    changeDate.type = 'date';
+    changeDate.name = 'dueDate';
+    changeDate.id = 'change-due';
+    projChangeForm.appendChild(changeDate);
+
+    const changePrio = document.createElement('select');
+    changePrio.id = 'change-prio';
+    changePrio.name = 'priority';
+    projChangeForm.appendChild(changePrio);
+
+    const changeHighPrio = document.createElement('option');
+    changeHighPrio.value = 'high';
+    changeHighPrio.innerHTML = 'High';
+    changePrio.appendChild(changeHighPrio);
+
+    const changeMedPrio = document.createElement('option');
+    changeMedPrio.value = 'medium';
+    changeMedPrio.innerHTML = 'Medium';
+    changePrio.appendChild(changeMedPrio);
+
+    const changeLowPrio = document.createElement('option');
+    changeLowPrio.value = 'low';
+    changeLowPrio.innerHTML = 'Low';
+    changePrio.appendChild(changeLowPrio);
+
+    const changeButton = document.createElement('button');
+    changeButton.type = 'submit';
+    changeButton.id = 'proj-change-submit';
+    changeButton.innerHTML = 'Change';
+    projChangeForm.appendChild(changeButton)
+
+    projChangeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(projChangeForm);
+        const formObj = Object.fromEntries(fd);
+        object.title = formObj.title;
+        object.description = formObj.desc;
+        object.dueDate = formObj.dueDate;
+        object.priority = formObj.priority;
+        localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+        clearToDo();
+        populateToDo(object);
+        projChangeDia.open = false;
+        projChangeForm.reset();
+    });
+
+
+    const projChangeBtn = document.createElement('button');
+    projChangeBtn.id = 'change-proj-btn';
+    projChangeBtn.innerHTML = 'Change Project Info'
+    projChangeBtn.addEventListener('click', () => {
+        projChangeDia.open = true;
+    });
+    projInfo.appendChild(projChangeBtn);
+
     // project info has a button to mark the project complete or incomplete
     const completeProj = document.createElement('button');
     if (object.done = false) {
@@ -31,6 +111,10 @@ function populateToDo(object) {
         completeProj.innerHTML = 'Mark Project Complete'
         completeProj.addEventListener('click', () => {
             object.done = true;
+            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+            clearProjects();
+            populateProjects();
+            clearToDo();
             populateToDo(object);
         });
     } else {
@@ -38,9 +122,15 @@ function populateToDo(object) {
         completeProj.innerHTML = 'Mark Project Incomplete'
         completeProj.addEventListener('click', () => {
             object.done = false;
+            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+            clearProjects();
+            populateProjects();
+            clearToDo();
             populateToDo(object);
         });
     };
+    projInfo.appendChild(completeProj);
+    
     // loop the below for all toDo items
     for (let i = 0; i < object.list.length; i++) {
         // create a div within toDoDisplay
@@ -195,7 +285,7 @@ function populateProjects() {
         const projDueDate = document.createElement('p');
         if (projectList[i].done === false) {
             projDueDate.classList.add('proj-incomplete');
-            projDueDate.innerHTML = projectList[i].dueDate;
+            projDueDate.innerHTML = 'Due' + projectList[i].dueDate;
         } else {
             projDueDate.classList.add('proj-complete');
             projDueDate.innerHTML = 'COMPLETE';
@@ -245,7 +335,7 @@ projForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(projForm);
     const formObj = Object.fromEntries(fd);
-    projectList.unshift(newProject(formObj.title, '', '', ''));
+    projectList.unshift(newProject(formObj.title, '', formObj.due, ''));
     localStorage.setItem('toDoProjects', JSON.stringify(projectList));
     clearProjects();
     populateProjects();

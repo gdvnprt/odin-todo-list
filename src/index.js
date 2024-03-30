@@ -21,8 +21,13 @@ function populateToDo(object) {
 
     const projDue = document.createElement('p');
     projDue.id = 'due-date';
-    projDue.innerHTML = object.dueDate;
+    projDue.innerHTML = "Due: " + object.dueDate;
     projInfo.appendChild(projDue);
+
+    const projPrio = document.createElement('p');
+    projPrio.id = 'priority';
+    projPrio.innerHTML = "Priority: " + object.priority;
+    projInfo.appendChild(projPrio);
 
     // have methods to change all project info
     const projChangeDia = document.createElement('dialog');

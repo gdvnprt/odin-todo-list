@@ -12,104 +12,182 @@ projChangeDia.open = false;
 //populating functions
 function populateToDo(object) {
     // populate project info section with title, desc, due date
+    // have methods to change all project info
+    const projChangeForm = document.querySelector('#change-proj-form');
+
     const projTitle = document.createElement('h2');
     projTitle.innerHTML = object.title;
     projInfo.appendChild(projTitle);
+    const changeTitleBtn = document.createElement('button');
+        changeTitleBtn.classList.add('change-button');
+        changeTitleBtn.innerHTML = 'Change Title'
+        changeTitleBtn.addEventListener('click', () => {
+            const changeTitle = document.createElement('input');
+            changeTitle.type = 'text';
+            changeTitle.name = 'title';
+            changeTitle.id = 'change-title';
+            changeTitle.value = object.title;
+            changeTitle.placeholder = object.title;
+            projChangeForm.appendChild(changeTitle);
+
+            const changeButton = document.createElement('button');
+            changeButton.type = 'submit';
+            changeButton.id = 'proj-change-submit';
+            changeButton.innerHTML = 'Change';
+            changeButton.addEventListener('click', () => {
+                projChangeDia.open = true;
+            });
+            projChangeForm.appendChild(changeButton)
+
+            projChangeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(projChangeForm);
+                const formObj = Object.fromEntries(fd);
+                object.title = formObj.title;
+                localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+                clearChangeForm();
+                clearProjects();
+                populateProjects();
+                clearToDo();
+                populateToDo(object);
+                projChangeDia.open = false;
+            });
+        });
+    projChangeForm.appendChild(changeTitleBtn);
 
     const projDesc = document.createElement('p');
     projDesc.classList.add('project-description');
     projDesc.innerHTML = object.description;
     projInfo.appendChild(projDesc);
+    const changeDescBtn = document.createElement('button');
+        changeDescBtn.classList.add('change-button');
+        changeDescBtn.innerHTML = 'Change Description'
+        changeDescBtn.addEventListener('click', () => {
+            const changeDesc = document.createElement('input');
+            changeDesc.type = 'text';
+            changeDesc.name = 'desc';
+            changeDesc.id = 'change-desc';
+            changeDesc.placeholder = object.desc || "Description";
+            projChangeForm.appendChild(changeDesc);
+
+            const changeButton = document.createElement('button');
+            changeButton.type = 'submit';
+            changeButton.id = 'proj-change-submit';
+            changeButton.innerHTML = 'Change';
+            changeButton.addEventListener('click', () => {
+                projChangeDia.open = true;
+            });
+            projChangeForm.appendChild(changeButton)
+
+            projChangeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(projChangeForm);
+                const formObj = Object.fromEntries(fd);
+                object.description = formObj.desc;
+                localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+                clearChangeForm();
+                clearProjects();
+                populateProjects();
+                clearToDo();
+                populateToDo(object);
+                projChangeDia.open = false;
+            });
+        });
+    projChangeForm.appendChild(changeDescBtn);
 
     const projDue = document.createElement('p');
     projDue.id = 'due-date';
     projDue.innerHTML = "Due: " + object.dueDate;
     projInfo.appendChild(projDue);
+    const changeDueBtn = document.createElement('button');
+        changeDueBtn.classList.add('change-button');
+        changeDueBtn.innerHTML = 'Change Description'
+        changeDueBtn.addEventListener('click', () => {
+            const changeDate = document.createElement('input');
+            changeDate.type = 'date';
+            changeDate.name = 'dueDate';
+            changeDate.id = 'change-due';
+            projChangeForm.appendChild(changeDate);
+
+            const changeButton = document.createElement('button');
+            changeButton.type = 'submit';
+            changeButton.id = 'proj-change-submit';
+            changeButton.innerHTML = 'Change';
+            changeButton.addEventListener('click', () => {
+                projChangeDia.open = true;
+            });
+            projChangeForm.appendChild(changeButton)
+
+            projChangeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(projChangeForm);
+                const formObj = Object.fromEntries(fd);
+                object.dueDate = formObj.dueDate;
+                localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+                clearChangeForm();
+                clearProjects();
+                populateProjects();
+                clearToDo();
+                populateToDo(object);
+                projChangeDia.open = false;
+            });
+        });
+    projChangeForm.appendChild(changeDueBtn);
 
     const projPrio = document.createElement('p');
     projPrio.id = 'priority';
     projPrio.innerHTML = "Priority: " + object.priority;
     projInfo.appendChild(projPrio);
+    const changePrioBtn = document.createElement('button');
+        changePrioBtn.classList.add('change-button');
+        changePrioBtn.innerHTML = 'Change Description'
+        changePrioBtn.addEventListener('click', () => {
+            const changePrio = document.createElement('select');
+            changePrio.id = 'change-prio';
+            changePrio.name = 'priority';
+            projChangeForm.appendChild(changePrio);
 
-    // have methods to change all project info
-    const projChangeForm = document.createElement('form');
-    projChangeForm.id = 'change-proj-form';
-    projChangeDia.appendChild(projChangeForm);
+            const changeHighPrio = document.createElement('option');
+            changeHighPrio.value = 'High';
+            changeHighPrio.innerHTML = 'High';
+            changePrio.appendChild(changeHighPrio);
 
-    const changeTitle = document.createElement('input');
-    changeTitle.type = 'text';
-    changeTitle.name = 'title';
-    changeTitle.id = 'change-title';
-    changeTitle.value = object.title;
-    changeTitle.placeholder = object.title;
-    projChangeForm.appendChild(changeTitle);
+            const changeMedPrio = document.createElement('option');
+            changeMedPrio.value = 'Medium';
+            changeMedPrio.innerHTML = 'Medium';
+            changePrio.appendChild(changeMedPrio);
 
-    const changeDesc = document.createElement('input');
-    changeDesc.type = 'text';
-    changeDesc.name = 'desc';
-    changeDesc.id = 'change-desc';
-    changeDesc.placeholder = object.desc || "Description";
-    projChangeForm.appendChild(changeDesc);
+            const changeLowPrio = document.createElement('option');
+            changeLowPrio.value = 'Low';
+            changeLowPrio.innerHTML = 'Low';
+            changePrio.appendChild(changeLowPrio);
 
-    const changeDate = document.createElement('input');
-    changeDate.type = 'date';
-    changeDate.name = 'dueDate';
-    changeDate.id = 'change-due';
-    projChangeForm.appendChild(changeDate);
+            const changeButton = document.createElement('button');
+            changeButton.type = 'submit';
+            changeButton.id = 'proj-change-submit';
+            changeButton.innerHTML = 'Change';
+            changeButton.addEventListener('click', () => {
+                projChangeDia.open = true;
+            });
+            projChangeForm.appendChild(changeButton)
 
-    const changePrio = document.createElement('select');
-    changePrio.id = 'change-prio';
-    changePrio.name = 'priority';
-    projChangeForm.appendChild(changePrio);
+            projChangeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fd = new FormData(projChangeForm);
+                const formObj = Object.fromEntries(fd);
+                object.priority = formObj.priority;
+                localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+                clearChangeForm();
+                clearProjects();
+                populateProjects();
+                clearToDo();
+                populateToDo(object);
+                projChangeDia.open = false;
+            });
+        });
+    projChangeForm.appendChild(changePrioBtn);
 
-    const changeHighPrio = document.createElement('option');
-    changeHighPrio.value = 'high';
-    changeHighPrio.innerHTML = 'High';
-    changePrio.appendChild(changeHighPrio);
-
-    const changeMedPrio = document.createElement('option');
-    changeMedPrio.value = 'medium';
-    changeMedPrio.innerHTML = 'Medium';
-    changePrio.appendChild(changeMedPrio);
-
-    const changeLowPrio = document.createElement('option');
-    changeLowPrio.value = 'low';
-    changeLowPrio.innerHTML = 'Low';
-    changePrio.appendChild(changeLowPrio);
-
-    const changeButton = document.createElement('button');
-    changeButton.type = 'submit';
-    changeButton.id = 'proj-change-submit';
-    changeButton.innerHTML = 'Change';
-    projChangeForm.appendChild(changeButton)
-
-    projChangeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const fd = new FormData(projChangeForm);
-        const formObj = Object.fromEntries(fd);
-        object.title = formObj.title;
-        object.description = formObj.desc;
-        object.dueDate = formObj.dueDate;
-        object.priority = formObj.priority;
-        localStorage.setItem('toDoProjects', JSON.stringify(projectList));
-        clearProjects();
-        populateProjects();
-        clearToDo();
-        populateToDo(object);
-        projChangeDia.open = false;
-        projChangeForm.reset();
-    });
-
-
-    const projChangeBtn = document.createElement('button');
-    projChangeBtn.id = 'change-proj-btn';
-    projChangeBtn.innerHTML = 'Change Project Info'
-    projChangeBtn.addEventListener('click', () => {
-        projChangeDia.open = true;
-    });
-    projInfo.appendChild(projChangeBtn);
-
-    // project info has a button to mark the project complete or incomplete
+ // project info has a button to mark the project complete or incomplete
     const completeProj = document.createElement('button');
     if (object.done === false) {
         completeProj.id = 'complete-project';
@@ -281,7 +359,7 @@ function populateProjects() {
             projDiv.style.backgroundColor = 'blue';
             // make the same event trigger populating ToDo with a separate function
             clearToDo();
-            populateToDo();
+            populateToDo(projectList[i]);
         });
         // show project title and due date if incomplete and complete if complete
         const projTtl = document.createElement('p');
@@ -325,6 +403,14 @@ function clearToDo() {
     };
 };
 
+function clearChangeForm() {
+    while (projChangeForm.firstChild) {
+        projChangeForm.removeChild(projChangeForm.firstChild);
+    };
+    let new_element = projChangeForm.cloneNode(true);
+    projChangeDia.replaceChild(new_element, projChangeForm);
+};
+
 // on load, pull projects from local storage
 let projectList = accessStorage();
 
@@ -347,6 +433,9 @@ projForm.addEventListener('submit', (e) => {
     clearProjects();
     populateProjects();
     // highlight the new project as if selected
+    const projDivs = document.querySelectorAll('.project-div');
+    projDivs[0].style.backgroundColor = 'blue';
+
     clearToDo();
     populateToDo(projectList[0]);
 

@@ -6,6 +6,8 @@ import accessStorage from './storage.js';
 const projectDisplay = document.querySelector('#project-list');
 const projInfo = document.querySelector('#proj-info');
 const toDoDisplay = document.querySelector('#todo');
+const projChangeDia = document.querySelector('#change-proj-dia');
+projChangeDia.open = false;
 
 //populating functions
 function populateToDo(object) {
@@ -30,11 +32,6 @@ function populateToDo(object) {
     projInfo.appendChild(projPrio);
 
     // have methods to change all project info
-    const projChangeDia = document.createElement('dialog');
-    projChangeDia.id = 'change-proj-dia';
-    projChangeDia.open = false;
-    projInfo.appendChild(projChangeDia);
-
     const projChangeForm = document.createElement('form');
     projChangeForm.id = 'change-proj-form';
     projChangeDia.appendChild(projChangeForm);
@@ -43,6 +40,7 @@ function populateToDo(object) {
     changeTitle.type = 'text';
     changeTitle.name = 'title';
     changeTitle.id = 'change-title';
+    changeTitle.value = object.title;
     changeTitle.placeholder = object.title;
     projChangeForm.appendChild(changeTitle);
 
@@ -283,7 +281,7 @@ function populateProjects() {
             projDiv.style.backgroundColor = 'blue';
             // make the same event trigger populating ToDo with a separate function
             clearToDo();
-            populateToDo(projectList[i]);
+            populateToDo();
         });
         // show project title and due date if incomplete and complete if complete
         const projTtl = document.createElement('p');
@@ -301,7 +299,14 @@ function populateProjects() {
         projDiv.appendChild(projTtl);
         projDiv.appendChild(projDueDate)
     };
-    
+
+    //new project button to open new project form
+    const newProjBtn = document.createElement('button');
+    newProjBtn.id = 'new-project'
+    newProjBtn.addEventListener('click', () => {
+        newProjDia.open = true
+    });
+
 };
 
 //clearing functions
@@ -327,14 +332,9 @@ if (projectList.length > 0) {
     populateProjects();
 };
 
-// new project button populates DOM and local storage list
-const newProjBtn = document.querySelector('#new-project');
+// new project form populates DOM and local storage list
 const newProjDia = document.querySelector('#new-proj-dialogue');
 newProjDia.open = false;
-
-newProjBtn.addEventListener('click', () => {
-    newProjDia.open = true
-});
 
 const projForm = document.querySelector('#new-proj-form');
 
@@ -348,8 +348,8 @@ projForm.addEventListener('submit', (e) => {
     populateProjects();
     // highlight the new project as if selected
     clearToDo();
-    const listPlace = projectList.length - 1;
-    populateToDo(projectList[listPlace]);
+    populateToDo(projectList[0]);
+
     newProjDia.open = false;
     projForm.reset();
 });

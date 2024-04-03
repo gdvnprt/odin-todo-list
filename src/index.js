@@ -21,10 +21,12 @@ function populateToDo(object) {
     projChangeDia.appendChild(projChangeForm);
 
     const projTitle = document.createElement('h2');
+    projTitle.id = 'title-info';
     projTitle.innerHTML = object.title;
     projInfo.appendChild(projTitle);
     const changeTitleBtn = document.createElement('button');
         changeTitleBtn.classList.add('change-button');
+        changeTitleBtn.id = 'title-change-btn'
         changeTitleBtn.innerHTML = 'Change Title';
         changeTitleBtn.addEventListener('click', () => {
             projChangeDia.open = true;
@@ -57,11 +59,12 @@ function populateToDo(object) {
     projInfo.appendChild(changeTitleBtn);
 
     const projDesc = document.createElement('p');
-    projDesc.classList.add('project-description');
+    projDesc.id = 'desc-info';
     projDesc.innerHTML = object.description;
     projInfo.appendChild(projDesc);
     const changeDescBtn = document.createElement('button');
         changeDescBtn.classList.add('change-button');
+        changeDescBtn.id = 'desc-change-btn';
         changeDescBtn.innerHTML = 'Change Description'
         changeDescBtn.addEventListener('click', () => {
             const changeDesc = document.createElement('input');
@@ -94,11 +97,12 @@ function populateToDo(object) {
     projInfo.appendChild(changeDescBtn);
 
     const projDue = document.createElement('p');
-    projDue.id = 'due-date';
+    projDue.id = 'due-info';
     projDue.innerHTML = "Due: " + object.dueDate;
     projInfo.appendChild(projDue);
     const changeDueBtn = document.createElement('button');
         changeDueBtn.classList.add('change-button');
+        changeDueBtn.id = 'due-change-btn';
         changeDueBtn.innerHTML = 'Change Due Date'
         changeDueBtn.addEventListener('click', () => {
             const changeDate = document.createElement('input');
@@ -130,11 +134,12 @@ function populateToDo(object) {
     projInfo.appendChild(changeDueBtn);
 
     const projPrio = document.createElement('p');
-    projPrio.id = 'priority';
+    projPrio.id = 'prio-info';
     projPrio.innerHTML = "Priority: " + object.priority;
     projInfo.appendChild(projPrio);
     const changePrioBtn = document.createElement('button');
         changePrioBtn.classList.add('change-button');
+        changePrioBtn.id = 'prio-change-btn';
         changePrioBtn.innerHTML = 'Change Priority'
         changePrioBtn.addEventListener('click', () => {
             const changePrio = document.createElement('select');

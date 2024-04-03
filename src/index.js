@@ -223,14 +223,17 @@ function populateToDo(object) {
         toDoCheckbox.classList.add('to-do-checkbox');
         if (object.list[i].done === true) {
             toDoCheckbox.checked = true;
-            toDoItem.style.backgroundColor = 'green';
+            toDoItem.style.backgroundColor = '#1B8926';
+            toDoItem.style.color = 'white';
         };
         toDoCheckbox.addEventListener('change', (event) => {
             if (event.currentTarget.checked) {
-                toDoItem.style.backgroundColor = 'green';
+                toDoItem.style.backgroundColor = '#1B8926';
+                toDoItem.style.color = 'white';
                 object.list[i].done = true;
             } else {
                 toDoItem.style.backgroundColor = 'white';
+                toDoItem.style.color = 'black';
                 object.list[i].done = false;
             };
             localStorage.setItem('toDoProjects', JSON.stringify(projectList));
@@ -369,6 +372,8 @@ function populateProjects() {
         } else {
             projDueDate.classList.add('proj-complete');
             projDueDate.innerHTML = 'COMPLETE';
+            projDiv.style.backgroundColor = '#1B8926';
+            projDiv.style.color = 'white';
         };
         projectDisplay.appendChild(projDiv);
         projDiv.appendChild(projTtl);

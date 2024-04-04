@@ -355,6 +355,7 @@ function populateProjects() {
             let allProjs = document.querySelectorAll('.project-div');
             for (let a = 0; a < allProjs.length; a++) {
                 allProjs[a].style.backgroundColor = 'white';
+                allProjs[a].style.color = 'black';
             };
             projDiv.style.backgroundColor = 'blue';
             // make the same event trigger populating ToDo with a separate function
@@ -369,6 +370,7 @@ function populateProjects() {
         if (projectList[i].done === false) {
             projDueDate.classList.add('proj-incomplete');
             projDueDate.innerHTML = 'Due: ' + projectList[i].dueDate;
+            projDiv.style.color = 'black';
         } else {
             projDueDate.classList.add('proj-complete');
             projDueDate.innerHTML = 'COMPLETE';

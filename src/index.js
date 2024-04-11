@@ -189,12 +189,15 @@ function populateToDo(object) {
         deleteProj.id = 'delete-project';
         deleteProj.innerHTML = 'Delete Project';
         deleteProj.addEventListener('click', () => {
-            let deleteIndex = projectList.indexOf(object);
-            removeArrayItem(projectList, deleteIndex);
-            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
-            clearProjects();
-            populateProjects();
-            clearToDo();
+            let result = confirm("Are you sure you want to delete this project?");
+            if (result) {
+                let deleteIndex = projectList.indexOf(object);
+                removeArrayItem(projectList, deleteIndex);
+                localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+                clearProjects();
+                populateProjects();
+                clearToDo();
+            };
         });
     projInfo.appendChild(deleteProj);
 
@@ -287,7 +290,7 @@ function populateToDo(object) {
             clearToDo();
             populateToDo(object);
         });
-        toDoItem.appendChild(toDoDate);
+        toDoItem.appendChild(deleteToDo);
     };
     // have a button to create a new to-do item
 

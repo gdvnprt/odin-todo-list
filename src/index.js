@@ -185,6 +185,19 @@ function populateToDo(object) {
         });
     projInfo.appendChild(changePrioBtn);
 
+    const deleteProj = document.createElement('button');
+        deleteProj.id = 'delete-project';
+        deleteProj.innerHTML = 'Delete Project';
+        deleteProj.addEventListener('click', () => {
+            let deleteIndex = projectList.indexOf(object);
+            removeArrayItem(projectList, deleteIndex);
+            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+            clearProjects();
+            populateProjects();
+            clearToDo();
+        });
+    projInfo.appendChild(deleteProj);
+
  // project info has a button to mark the project complete or incomplete
     const completeProj = document.createElement('button');
     if (object.done === false) {
@@ -261,8 +274,20 @@ function populateToDo(object) {
         toDoDate.classList.add('to-do-date');
         toDoDate.innerHTML = object.list[i].dueDate;
         toDoItem.appendChild(toDoDate);
-        // priority should adjust position in list
+
         // items should be able to be deleted
+        const deleteToDo = document.createElement('button');
+        deleteToDo.classList.add('delete-todo');
+        deleteToDo.innerHTML = 'Delete';
+        deleteToDo.addEventListener('click', () => {
+            removeArrayItem(object.list, i);
+            localStorage.setItem('toDoProjects', JSON.stringify(projectList));
+            clearProjects();
+            populateProjects();
+            clearToDo();
+            populateToDo(object);
+        });
+        toDoItem.appendChild(toDoDate);
     };
     // have a button to create a new to-do item
 

@@ -8,6 +8,7 @@ module.exports = {
   storage: './src/storage.js',
   project: './src/project.js',
   todo: './src/todo.js',
+  arrayEdit: './src/array-edit.js',
   },
   plugins: [
     new HtmlWebpackPlugin({

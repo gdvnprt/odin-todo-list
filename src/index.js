@@ -2,6 +2,7 @@ import './style.css'
 import newToDo from './todo.js';
 import newProject from './project.js';
 import accessStorage from './storage.js';
+import removeArrayItem from './array-edit.js';
 
 const projectDisplay = document.querySelector('#project-list');
 const projInfo = document.querySelector('#proj-info');

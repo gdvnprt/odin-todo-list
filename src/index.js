@@ -276,7 +276,7 @@ function populateToDo(object) {
 
         const toDoDate = document.createElement('p');
         toDoDate.classList.add('to-do-date');
-        toDoDate.innerHTML = format(object.list[i], 'MMM do yyyy');
+        toDoDate.innerHTML = "Due:" + format(object.list[i].dueDate, 'MMM do yyyy');
         toDoItem.appendChild(toDoDate);
 
         // items should be able to be deleted

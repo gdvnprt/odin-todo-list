@@ -3,6 +3,7 @@ import newToDo from './todo.js';
 import newProject from './project.js';
 import accessStorage from './storage.js';
 import removeArrayItem from './array-edit.js';
+import { format } from 'date-fns';
 
 const projectDisplay = document.querySelector('#project-list');
 const projInfo = document.querySelector('#proj-info');
@@ -99,7 +100,7 @@ function populateToDo(object) {
 
     const projDue = document.createElement('p');
     projDue.id = 'due-info';
-    projDue.innerHTML = "Due: " + object.dueDate;
+    projDue.innerHTML = "Due: " + format(object.dueDate, 'MMMM do yyyy');
     projInfo.appendChild(projDue);
     const changeDueBtn = document.createElement('button');
         changeDueBtn.classList.add('change-button');
@@ -275,7 +276,7 @@ function populateToDo(object) {
 
         const toDoDate = document.createElement('p');
         toDoDate.classList.add('to-do-date');
-        toDoDate.innerHTML = object.list[i].dueDate;
+        toDoDate.innerHTML = format(object.list[i], 'MMM do yyyy');
         toDoItem.appendChild(toDoDate);
 
         // items should be able to be deleted
